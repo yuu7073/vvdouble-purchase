@@ -4266,18 +4266,21 @@ async function generateNames() {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
+          // 最長邊限制 1200px
           let w = img.width, h = img.height;
-          // 最長邊不超過 1600px
-          const maxSize = 1600;
-          if (w > maxSize || h > maxSize) {
-            if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
-            else { w = Math.round(w * maxSize / h); h = maxSize; }
-          }
+          const maxSize = 1200;
+          if (w > h) { if (w > maxSize) { h = Math.round(h * maxSize / w); w = maxSize; } }
+          else { if (h > maxSize) { w = Math.round(w * maxSize / h); h = maxSize; } }
           canvas.width = w; canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-          // 品質 0.85，通常能壓到 1MB 以下
-          resolve(canvas.toDataURL('image/jpeg', 0.85));
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          // 逐步降低品質直到 4MB 以內
+          let quality = 0.8;
+          let result = canvas.toDataURL('image/jpeg', quality);
+          while (result.length > 4 * 1024 * 1024 * 1.37 && quality > 0.3) {
+            quality -= 0.1;
+            result = canvas.toDataURL('image/jpeg', quality);
+          }
+          resolve(result);
         };
         img.src = e.target.result;
       };
