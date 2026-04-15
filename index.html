@@ -4325,12 +4325,14 @@ async function generateNames() {
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': getApiKey(),
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-disable-cors': 'true',
-      },
+      headers: (() => {
+        const h = new Headers();
+        h.append('Content-Type', 'application/json');
+        h.append('x-api-key', getApiKey().trim().replace(/[^\x20-\x7E]/g, ''));
+        h.append('anthropic-version', '2023-06-01');
+        h.append('anthropic-dangerous-direct-browser-access', 'true');
+        return h;
+      })(),
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
