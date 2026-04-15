@@ -1580,13 +1580,14 @@ body { background:var(--bg); color:var(--text); }
 // FIREBASE CONFIG — 請填入你的設定
 // ══════════════════════════════════════════
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  databaseURL: "YOUR_DATABASE_URL",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAcdAzwAi65EUnmXAlnnNdL53bNWsjEwZQ",
+  authDomain: "vvdouble-purchase.firebaseapp.com",
+  databaseURL: "https://vvdouble-purchase-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "vvdouble-purchase",
+  storageBucket: "vvdouble-purchase.firebasestorage.app",
+  messagingSenderId: "29856167196",
+  appId: "1:29856167196:web:b5d2f3c624acae226276d9",
+  measurementId: "G-3XJGQGE9VL"
 };
 
 const DB_ROOT = 'purchase_v1'; // 獨立路徑
@@ -1610,7 +1611,7 @@ let assignFilter = 'all';
 
 // Firebase 初始化（有設定才啟用）
 function tryInitFirebase() {
-  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY') return;
+  if (!firebaseConfig.databaseURL || firebaseConfig.databaseURL.includes('YOUR_DATABASE')) return;
   try {
     if (typeof firebase === 'undefined') return;
     if (!firebase.apps || firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
