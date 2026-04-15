@@ -947,6 +947,206 @@ body { background:var(--bg); color:var(--text); }
   .proj-kanban-card, .home-kanban-card {
     outline: none !important;
   }
+
+  /* ── NAMER ── */
+  .namer-layout {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 20px;
+    min-height: 600px;
+  }
+  @media(max-width:800px) { .namer-layout { grid-template-columns: 1fr; } }
+
+  .namer-input-panel {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .namer-result-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+    display: flex; flex-direction: column;
+  }
+
+  .namer-section { display: flex; flex-direction: column; gap: 7px; }
+  .namer-label {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    letter-spacing: .07em; text-transform: uppercase;
+  }
+
+  .namer-upload-area {
+    border: 2px dashed var(--border2); border-radius: 10px;
+    padding: 20px; text-align: center; cursor: pointer;
+    transition: border-color .2s, background .2s;
+    min-height: 160px; display: flex; align-items: center; justify-content: center;
+  }
+  .namer-upload-area:hover { border-color: var(--accent); background: var(--chip-active-bg); }
+  .namer-upload-area.has-img { padding: 10px; border-style: solid; border-color: var(--border); }
+
+  .namer-type-btn {
+    flex: 1; padding: 9px 12px; border-radius: 8px;
+    border: 1.5px solid var(--border2); background: var(--surface);
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    cursor: pointer; text-align: center; transition: all .15s;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .namer-type-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .namer-type-btn.active {
+    background: var(--chip-active-bg); border-color: var(--accent-border);
+    color: var(--chip-active-c); font-weight: 700;
+  }
+
+  .namer-category-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .namer-cat-btn {
+    padding: 5px 13px; border-radius: 20px;
+    border: 1.5px solid var(--border2); background: var(--surface);
+    font-size: 12px; color: var(--muted);
+    cursor: pointer; transition: all .15s;
+  }
+  .namer-cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .namer-cat-btn.active {
+    background: var(--chip-active-bg); border-color: var(--accent-border);
+    color: var(--chip-active-c); font-weight: 600;
+  }
+
+  .namer-result-card {
+    background: var(--bg2); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+    margin-bottom: 10px; cursor: pointer;
+    transition: all .18s; position: relative;
+    overflow: hidden;
+  }
+  .namer-result-card:hover {
+    border-color: var(--accent); background: var(--chip-active-bg);
+    transform: translateY(-1px); box-shadow: 0 4px 12px var(--shadow);
+  }
+  .namer-result-card::before {
+    content: '複製';
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 11px; color: var(--muted); opacity: 0;
+    transition: opacity .15s;
+  }
+  .namer-result-card:hover::before { opacity: 1; }
+  .namer-result-card.copied {
+    border-color: var(--success); background: #E6F5EC;
+  }
+  .namer-card-num {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    letter-spacing: .06em; margin-bottom: 5px;
+  }
+  .namer-card-name {
+    font-size: 15px; font-weight: 700; color: var(--text);
+    line-height: 1.4; padding-right: 40px;
+  }
+  .namer-card-reason {
+    font-size: 11px; color: var(--muted); margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .namer-spinner {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 3px solid var(--border2); border-top-color: var(--accent);
+    animation: spin .7s linear infinite;
+  }
+  .namer-copied-toast {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: var(--bg);
+    padding: 8px 18px; border-radius: 20px; font-size: 13px;
+    z-index: 300; opacity: 0; transition: opacity .2s; pointer-events: none;
+  }
+  .namer-copied-toast.show { opacity: 1; }
+
+  /* ── NAMING GENERATOR ── */
+  .naming-upload-area {
+    border: 2px dashed var(--border2);
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .naming-upload-area:hover {
+    border-color: var(--accent);
+    background: var(--chip-active-bg);
+  }
+  .naming-upload-area.has-img {
+    padding: 8px;
+    border-style: solid;
+    border-color: var(--border);
+    cursor: default;
+  }
+  .naming-type-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .naming-type-chip {
+    padding: 5px 14px; border-radius: 20px;
+    border: 1.5px solid var(--border2);
+    font-size: 12px; font-weight: 500;
+    color: var(--muted); cursor: pointer;
+    transition: all .15s;
+  }
+  .naming-type-chip.active {
+    background: var(--chip-active-bg);
+    border-color: var(--accent-border);
+    color: var(--chip-active-c);
+  }
+  .naming-result-card {
+    background: var(--bg2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    position: relative;
+    transition: border-color .15s;
+  }
+  .naming-result-card:hover { border-color: var(--accent-border); }
+  .naming-result-card:last-child { margin-bottom: 0; }
+  .naming-result-num {
+    font-size: 10px; font-weight: 700;
+    color: var(--muted); letter-spacing: .08em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .naming-result-text {
+    font-size: 15px; font-weight: 700;
+    color: var(--text); line-height: 1.4;
+    margin-bottom: 10px; word-break: break-all;
+  }
+  .naming-copy-btn {
+    padding: 5px 14px; font-size: 12px;
+    border: 1.5px solid var(--border2);
+    border-radius: 20px; background: var(--surface);
+    color: var(--text2); cursor: pointer;
+    font-family: inherit; transition: all .15s;
+  }
+  .naming-copy-btn:hover {
+    border-color: var(--accent); color: var(--accent);
+  }
+  .naming-copy-btn.copied {
+    border-color: var(--success); color: var(--success);
+  }
+  .naming-loading {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 12px; padding: 40px 20px;
+  }
+  .naming-spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  .naming-loading-text {
+    font-size: 13px; color: var(--muted);
+    animation: pulse2 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse2 {
+    0%,100% { opacity: 1; }
+    50% { opacity: .4; }
+  }
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:transparent; }
@@ -1081,6 +1281,7 @@ body { background:var(--bg); color:var(--text); }
     <div class="nav-tab" onclick="switchPage('assign', this)">📋 交辦牆 <span class="nav-badge" id="assign-badge">0</span></div>
     <div class="nav-tab" onclick="switchPage('projects', this)">📁 專案板</div>
     <div class="nav-tab" onclick="switchPage('notes', this)">🗒️ 便條紙</div>
+    <div class="nav-tab" onclick="switchPage('naming', this)">✨ 品名產生器</div>
     <div class="nav-tab" id="admin-tab" style="display:none" onclick="switchPage('admin', this)">⚙️ 成員管理</div>
   </div>
 
@@ -1175,6 +1376,114 @@ body { background:var(--bg); color:var(--text); }
       </div>
     </div>
 
+
+    <!-- ── NAMER ── -->
+    
+
+    <!-- ── NAMING ── -->
+    <div class="page" id="page-naming">
+      <div class="section-header">
+        <div class="section-title">品名產生器 <small>上傳商品圖，AI 自動取名</small></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+
+        <!-- 左：輸入區 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--chip-active-bg)">🖼️</div>
+              商品資訊
+            </div>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:16px">
+
+            <!-- 圖片上傳 -->
+            <div>
+              <div class="form-label">商品圖片（必填）</div>
+
+              <!-- 未選圖：label 直接包住，不需要任何 JS 事件 -->
+              <div id="naming-upload-placeholder">
+                <label for="naming-img-input" style="display:flex;flex-direction:column;align-items:center;gap:10px;border:2px dashed var(--border2);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.background='var(--chip-active-bg)'" onmouseout="this.style.borderColor='var(--border2)';this.style.background=''">
+                  <div style="font-size:36px">📷</div>
+                  <div style="background:var(--accent);color:#fff;padding:8px 22px;border-radius:8px;font-size:13px;font-weight:500">📎 選擇圖片</div>
+                  <div style="font-size:11px;color:var(--muted)">支援 JPG、PNG</div>
+                </label>
+                <input type="file" id="naming-img-input" accept="image/*" style="display:none" onchange="handleNamingImg(this)">
+              </div>
+
+              <!-- 已選圖：預覽 + 換圖按鈕 -->
+              <div id="naming-upload-preview-wrap" style="display:none">
+                <div style="border:1.5px solid var(--border);border-radius:10px;overflow:hidden;position:relative">
+                  <img id="naming-img-preview" style="width:100%;max-height:260px;object-fit:contain;display:block;background:var(--bg2)">
+                  <label for="naming-img-input" style="position:absolute;top:8px;right:8px;padding:4px 10px;font-size:11px;border:1px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit">✕ 換圖</label>
+                </div>
+                <div id="naming-img-name" style="font-size:11px;color:var(--muted);margin-top:6px;padding-left:2px"></div>
+              </div>
+            </div>
+
+            <!-- 類型 -->
+            <div>
+              <div class="form-label">商品類型</div>
+              <div class="naming-type-grid" id="naming-type-grid">
+                <div class="naming-type-chip active" data-type="洋裝" onclick="selectNamingType(this)">洋裝</div>
+                <div class="naming-type-chip" data-type="上衣" onclick="selectNamingType(this)">上衣</div>
+                <div class="naming-type-chip" data-type="褲子" onclick="selectNamingType(this)">褲子</div>
+                <div class="naming-type-chip" data-type="裙子" onclick="selectNamingType(this)">裙子</div>
+                <div class="naming-type-chip" data-type="外套" onclick="selectNamingType(this)">外套</div>
+                <div class="naming-type-chip" data-type="套裝" onclick="selectNamingType(this)">套裝</div>
+                <div class="naming-type-chip" data-type="背心" onclick="selectNamingType(this)">背心</div>
+                <div class="naming-type-chip" data-type="牛仔褲" onclick="selectNamingType(this)">牛仔褲</div>
+                <div class="naming-type-chip" data-type="針織上衣" onclick="selectNamingType(this)">針織上衣</div>
+                <div class="naming-type-chip" data-type="連身褲" onclick="selectNamingType(this)">連身褲</div>
+              </div>
+            </div>
+
+            <!-- 是否獨家 -->
+            <div>
+              <div class="form-label">獨家自訂</div>
+              <div style="display:flex;gap:10px">
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+                  <input type="radio" name="naming-exclusive" value="yes" checked style="accent-color:var(--accent)"> 是（加上＜獨家自訂＞）
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+                  <input type="radio" name="naming-exclusive" value="no" style="accent-color:var(--accent)"> 否
+                </label>
+              </div>
+            </div>
+
+            <!-- 補充說明 -->
+            <div>
+              <div class="form-label">補充說明（選填）</div>
+              <textarea id="naming-desc" class="form-textarea" placeholder="例：涼感布料、寬鬆版型、有腰帶設計、荷葉邊細節..." style="min-height:70px"></textarea>
+            </div>
+
+            <!-- 產生按鈕 -->
+            <button class="btn btn-primary" id="naming-generate-btn" onclick="generateNames()" style="width:100%;padding:12px;font-size:14px;justify-content:center">
+              ✨ 產生品名
+            </button>
+          </div>
+        </div>
+
+        <!-- 右：結果區 -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--chip-active-bg)">💡</div>
+              品名建議
+            </div>
+          </div>
+          <div class="card-body" id="naming-results">
+            <div class="empty-state">
+              <div class="empty-state-icon">✨</div>
+              <div class="empty-state-text">上傳圖片後點「產生品名」</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ── ADMIN ── -->
     <div class="page" id="page-admin">
       <div class="admin-body">
@@ -1231,6 +1540,18 @@ body { background:var(--bg); color:var(--text); }
                 <button onclick="addCountdownItem()" style="padding:7px 16px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;white-space:nowrap;">新增</button>
               </div>
             </div>
+          </div>
+
+          <!-- API Key 設定 -->
+          <div class="admin-card full">
+            <h3>🔑 AI 品名產生器 API Key</h3>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px">Key 只存在本機瀏覽器，關閉分頁後需重新輸入。不會上傳到任何地方。</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." style="flex:1;padding:7px 10px;font-size:13px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;" oninput="updateApiKeyStatus()">
+              <button onclick="saveApiKey()" style="padding:7px 16px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:500;white-space:nowrap;">儲存</button>
+              <button onclick="clearApiKey()" style="padding:7px 12px;background:transparent;color:var(--danger);border:1px solid var(--danger);border-radius:7px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap;">清除</button>
+            </div>
+            <div id="api-key-status" style="font-size:12px;margin-top:8px;color:var(--muted)">未設定</div>
           </div>
 
           <!-- 密碼重設 -->
@@ -1829,6 +2150,7 @@ function showApp() {
   // FAB — 強制顯示，不受上面 render 錯誤影響
   try { document.getElementById('fab-group').style.display = 'flex'; } catch(e) {}
   try { document.getElementById('stickyPanel').style.display = 'flex'; } catch(e) {}
+  setTimeout(initNamingEvents, 500);
 
   // countdown edit btn
   if (currentUser.role === 'admin') {
@@ -3766,6 +4088,10 @@ function syncAdminForm() {
   updateMqCount();
   renderAdminMemberList();
   renderCdAdminList();
+  updateApiKeyStatus();
+  const savedKey = getApiKey();
+  const keyInput = document.getElementById('api-key-input');
+  if (keyInput && savedKey) keyInput.value = savedKey;
 }
 
 
@@ -3869,6 +4195,258 @@ function previewStickyImg(input) {
   }
 }
 
+
+// ══════════════════════════════════════════
+// NAMING GENERATOR
+// ══════════════════════════════════════════
+let namingImgBase64 = null;
+let namingSelectedType = '洋裝';
+
+function handleNamingImg(input) {
+  const file = input && input.files ? input.files[0] : null;
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    namingImgBase64 = e.target.result;
+    const preview = document.getElementById('naming-img-preview');
+    const placeholder = document.getElementById('naming-upload-placeholder');
+    const previewWrap = document.getElementById('naming-upload-preview-wrap');
+    const nameEl = document.getElementById('naming-img-name');
+    if (preview) preview.src = namingImgBase64;
+    if (placeholder) placeholder.style.display = 'none';
+    if (previewWrap) previewWrap.style.display = 'block';
+    if (nameEl) nameEl.textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+// 初始化品名產生器的事件（showApp 後才綁定）
+function initNamingEvents() {
+  const fileInput = document.getElementById('naming-img-input');
+  if (!fileInput || fileInput._bound) return;
+  fileInput.addEventListener('change', function() {
+    handleNamingImg(this);
+  });
+  fileInput._bound = true;
+}
+
+function clearNamingImg() {
+  namingImgBase64 = null;
+  const inp = document.getElementById('naming-img-input');
+  if (inp) inp.value = '';
+  const prev = document.getElementById('naming-img-preview');
+  if (prev) prev.src = '';
+  const ph = document.getElementById('naming-upload-placeholder');
+  if (ph) ph.style.display = 'block';
+  const pw = document.getElementById('naming-upload-preview-wrap');
+  if (pw) pw.style.display = 'none';
+  const nm = document.getElementById('naming-img-name');
+  if (nm) nm.textContent = '';
+}
+
+function selectNamingType(el) {
+  document.querySelectorAll('.naming-type-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  namingSelectedType = el.dataset.type;
+}
+
+async function generateNames() {
+  // 每次都重新從 input.files 讀取，確保拿到最新圖片
+  const fileInput = document.getElementById('naming-img-input');
+  let imageData = null;
+  let imageType = 'image/jpeg';
+
+  if (fileInput && fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    imageType = file.type || 'image/jpeg';
+    imageData = await new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result);
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  if (!imageData) {
+    alert('請先選擇商品圖片');
+    return;
+  }
+  namingImgBase64 = imageData;
+
+  // 檢查 API Key
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    alert('請先到「成員管理」頁面設定 AI API Key');
+    return;
+  }
+
+  const isExclusive = document.querySelector('input[name="naming-exclusive"]:checked').value === 'yes';
+  const desc = document.getElementById('naming-desc').value.trim();
+  const type = namingSelectedType;
+
+  // 顯示 loading
+  const resultsEl = document.getElementById('naming-results');
+  resultsEl.innerHTML = '<div class="naming-loading"><div class="naming-spinner"></div><div class="naming-loading-text">AI 正在分析商品圖片...</div></div>';
+
+  const btn = document.getElementById('naming-generate-btn');
+  btn.disabled = true;
+  btn.textContent = '產生中...';
+
+  // 準備 prompt
+  const exclusiveNote = isExclusive ? '品名前面要加上「＜獨家自訂＞」（用角括號包起來）' : '品名前面不加任何前綴';
+  const descNote = desc ? `\n額外補充：${desc}` : '';
+
+  const systemPrompt = `你是 VV DOUBLE 的品名命名師。VV DOUBLE 是台灣中大尺碼女裝品牌，品名風格簡潔有力、帶有設計感，會用形容詞描述版型/材質/設計細節，最後加上品項類型。
+
+品名規則：
+- 4到12個中文字（不含前綴）
+- 前半段：一兩個形容詞或設計特色（如：鬆緊平口、小立領簡約、必備率性古著感）
+- 後半段：設計細節或材質+品項類型（如：顯瘦修身連身褲、顯瘦百褶洋裝、牛仔吊帶傘襬洋裝）
+- 語氣要有質感、不誇張、精準描述商品特色
+- ${exclusiveNote}
+
+品名範例參考：
+- ＜獨家自訂＞鬆緊平口極顯瘦修身連身褲
+- ＜獨家自訂＞小立領簡約顯瘦百褶洋裝
+- 必備率性古著感牛仔吊帶傘襬洋裝
+- 雙車線中性簡約挺版襯衫
+- ＜獨家自訂＞甜酷不費力前拉鍊造型棉麻長洋裝
+
+請根據圖片生成3個品名，JSON格式回傳：
+{"names": ["品名1", "品名2", "品名3"]}
+只回傳JSON，不要其他文字。`;
+
+  const userPrompt = `請為這件${type}取3個品名。${descNote}`;
+
+  // 取出 base64 data（去掉 data:image/xxx;base64, 前綴）
+  const base64Data = imageData.split(',')[1];
+  const mediaType = imageData.split(';')[0].split(':')[1] || imageType;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': getApiKey(),
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-disable-cors': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mediaType, data: base64Data }
+            },
+            { type: 'text', text: userPrompt }
+          ]
+        }]
+      })
+    });
+
+    const data = await response.json();
+    const raw = data.content?.find(b => b.type === 'text')?.text || '';
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    const names = parsed.names || [];
+
+    if (!names.length) throw new Error('no names');
+
+    // 顯示結果
+    resultsEl.innerHTML = '';
+    names.forEach((name, i) => {
+      const card = document.createElement('div');
+      card.className = 'naming-result-card';
+      card.innerHTML =
+        '<div class="naming-result-num">方案 ' + (i+1) + '</div>'
+        + '<div class="naming-result-text" id="naming-text-' + i + '">' + name + '</div>'
+        + '<button class="naming-copy-btn" onclick="copyNamingResult(' + i + ', this)">📋 複製品名</button>';
+      resultsEl.appendChild(card);
+    });
+
+    // 加重新產生按鈕
+    const regenBtn = document.createElement('button');
+    regenBtn.className = 'btn btn-ghost';
+    regenBtn.style.cssText = 'width:100%;margin-top:12px;justify-content:center;font-size:13px';
+    regenBtn.textContent = '🔄 重新產生';
+    regenBtn.onclick = generateNames;
+    resultsEl.appendChild(regenBtn);
+
+  } catch(e) {
+    resultsEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-text">產生失敗，請重試<br><span style="font-size:11px;color:var(--muted)">' + (e.message || '') + '</span></div></div>';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✨ 產生品名';
+}
+
+function copyNamingResult(idx, btn) {
+  const text = document.getElementById('naming-text-' + idx)?.textContent || '';
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ 已複製！';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 複製品名';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✅ 已複製！';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 複製品名';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+
+// ══════════════════════════════════════════
+// API KEY 管理
+// ══════════════════════════════════════════
+function getApiKey() {
+  return sessionStorage.getItem('pu_api_key') || '';
+}
+
+function saveApiKey() {
+  const key = document.getElementById('api-key-input').value.trim();
+  if (!key) { alert('請輸入 API Key'); return; }
+  if (!key.startsWith('sk-ant-')) { alert('API Key 格式不正確，應以 sk-ant- 開頭'); return; }
+  sessionStorage.setItem('pu_api_key', key);
+  updateApiKeyStatus();
+  alert('✅ API Key 已儲存');
+}
+
+function clearApiKey() {
+  sessionStorage.removeItem('pu_api_key');
+  const input = document.getElementById('api-key-input');
+  if (input) input.value = '';
+  updateApiKeyStatus();
+}
+
+function updateApiKeyStatus() {
+  const el = document.getElementById('api-key-status');
+  if (!el) return;
+  const key = getApiKey();
+  if (key) {
+    el.textContent = '✅ 已設定（' + key.slice(0,16) + '...）';
+    el.style.color = 'var(--success)';
+  } else {
+    el.textContent = '⚠️ 未設定，品名產生器無法使用';
+    el.style.color = 'var(--warn)';
+  }
+}
+
 function toBase64(file) {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -3917,6 +4495,69 @@ document.getElementById('login-pass').addEventListener('keydown', e => {
 });
 
 // ══════════════════════════════════════════
+
+// ══════════════════════════════════════════
+// NAMER
+// ══════════════════════════════════════════
+let namerImgBase64 = null;
+let namerType = 'exclusive';   // exclusive | normal
+let namerCategory = '洋裝';
+
+
+
+
+
+function showNamerResults(names) {
+  document.getElementById('namer-loading').style.display = 'none';
+  document.getElementById('namer-results').style.display = 'block';
+
+  const container = document.getElementById('namer-cards');
+  container.innerHTML = '';
+
+  names.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'namer-result-card';
+
+    card.innerHTML =
+      '<div class="namer-card-num">品名 ' + (i + 1) + '</div>'
+      + '<div class="namer-card-name">' + item.name + '</div>'
+      + (item.reason ? '<div class="namer-card-reason">💡 ' + item.reason + '</div>' : '');
+
+    card.onclick = () => copyNamerName(item.name, card);
+    container.appendChild(card);
+  });
+}
+
+function copyNamerName(name, card) {
+  navigator.clipboard.writeText(name).then(() => {
+    // 卡片閃綠
+    card.classList.add('copied');
+    setTimeout(() => card.classList.remove('copied'), 1500);
+
+    // Toast
+    let toast = document.getElementById('namer-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'namer-toast';
+      toast.className = 'namer-copied-toast';
+      toast.textContent = '✅ 已複製品名';
+      document.body.appendChild(toast);
+    }
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = name;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    card.classList.add('copied');
+    setTimeout(() => card.classList.remove('copied'), 1500);
+  });
+}
+
 // START
 // ══════════════════════════════════════════
 initApp();
