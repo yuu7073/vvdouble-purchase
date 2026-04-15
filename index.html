@@ -1444,7 +1444,7 @@ body { background:var(--bg); color:var(--text); }
               <div class="form-label">獨家自訂</div>
               <div style="display:flex;gap:10px">
                 <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
-                  <input type="radio" name="naming-exclusive" value="yes" checked style="accent-color:var(--accent)"> 是（加上＜獨家自訂＞）
+                  <input type="radio" name="naming-exclusive" value="yes" checked style="accent-color:var(--accent)"> 是（加上《獨家自訂》）
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
                   <input type="radio" name="naming-exclusive" value="no" style="accent-color:var(--accent)"> 否
@@ -4258,10 +4258,29 @@ async function generateNames() {
 
   if (fileInput && fileInput.files && fileInput.files[0]) {
     const file = fileInput.files[0];
-    imageType = file.type || 'image/jpeg';
+    imageType = 'image/jpeg';
+    // 壓縮圖片到 4MB 以內
     imageData = await new Promise(resolve => {
       const reader = new FileReader();
-      reader.onload = e => resolve(e.target.result);
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let w = img.width, h = img.height;
+          // 最長邊不超過 1600px
+          const maxSize = 1600;
+          if (w > maxSize || h > maxSize) {
+            if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+            else { w = Math.round(w * maxSize / h); h = maxSize; }
+          }
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          // 品質 0.85，通常能壓到 1MB 以下
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.src = e.target.result;
+      };
       reader.onerror = () => resolve(null);
       reader.readAsDataURL(file);
     });
@@ -4293,7 +4312,7 @@ async function generateNames() {
   btn.textContent = '產生中...';
 
   // 準備 prompt
-  const exclusiveNote = isExclusive ? '品名前面要加上「＜獨家自訂＞」（用角括號包起來）' : '品名前面不加任何前綴';
+  const exclusiveNote = isExclusive ? '品名前面要加上「《獨家自訂》」（用角括號包起來）' : '品名前面不加任何前綴';
   const descNote = desc ? `\n額外補充：${desc}` : '';
 
   const systemPrompt = `你是 VV DOUBLE 的品名命名師。VV DOUBLE 是台灣中大尺碼女裝品牌，品名風格簡潔有力、帶有設計感，會用形容詞描述版型/材質/設計細節，最後加上品項類型。
@@ -4306,11 +4325,11 @@ async function generateNames() {
 - ${exclusiveNote}
 
 品名範例參考：
-- ＜獨家自訂＞鬆緊平口極顯瘦修身連身褲
-- ＜獨家自訂＞小立領簡約顯瘦百褶洋裝
+- 《獨家自訂》鬆緊平口極顯瘦修身連身褲
+- 《獨家自訂》小立領簡約顯瘦百褶洋裝
 - 必備率性古著感牛仔吊帶傘襬洋裝
 - 雙車線中性簡約挺版襯衫
-- ＜獨家自訂＞甜酷不費力前拉鍊造型棉麻長洋裝
+- 《獨家自訂》甜酷不費力前拉鍊造型棉麻長洋裝
 
 請根據圖片生成3個品名，JSON格式回傳：
 {"names": ["品名1", "品名2", "品名3"]}
