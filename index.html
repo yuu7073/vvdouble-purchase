@@ -4315,7 +4315,7 @@ async function generateNames() {
   btn.textContent = '產生中...';
 
   // 準備 prompt
-  const exclusiveNote = isExclusive ? '品名前面要加上「《獨家自訂》」（用角括號包起來）' : '品名前面不加任何前綴';
+  const exclusiveNote = isExclusive ? '三個品名前面都必須加上《獨家自訂》，例如：《獨家自訂》品名內容' : '品名前面不加任何前綴，直接從品名開始';
   const descNote = desc ? `\n額外補充：${desc}` : '';
 
   const systemPrompt = `你是 VV DOUBLE 的品名命名師。VV DOUBLE 是台灣中大尺碼女裝品牌，品名有獨特的風格，帶有情境感和設計感。
